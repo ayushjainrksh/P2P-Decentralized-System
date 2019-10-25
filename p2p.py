@@ -9,8 +9,23 @@ class p2p:
 def main():
     msg =  "Begin"
     while True:
-        server = Server(msg)
-        client = Client(p2p.peers[0])
+
+        time.sleep(randint(1,2))
+
+        for peer in p2p.peers:
+            try:
+                client = Client(peer)
+            except KeyboardInterrupt:
+                sys.exit(0)
+            except:
+               pass 
+
+            try:
+                server = Server(msg)
+            except KeyboardInterrupt:
+                sys.exit(0)
+            except:
+               pass
 
 if(__name__=="__main__"):
     main()

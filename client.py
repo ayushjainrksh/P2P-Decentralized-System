@@ -6,7 +6,7 @@ class Client:
         self.listen_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.listen_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.listen_socket.connect((addr, PORT))
-        self.listen_socket.listen(1)
+        # self.listen_socket.listen(1)
 
         # print(f'Serving HTTP on port {PORT} ...')
         
@@ -19,6 +19,7 @@ class Client:
 
             elif data[0:1]   == b'\x11':
                 print("Got peers")
+                self.update_peers(data[1:])
                 print(data)
 
     def receive_message(self):
@@ -27,3 +28,6 @@ class Client:
         print(data.decode('utf-8'))
         print("Received message is : ")
         return data
+
+    def update_peers(self, peers):
+        p2p.peers = str(peers, "utf-8").split(',')[:-1]
